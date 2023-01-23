@@ -66,7 +66,7 @@ const Home = () => {
             <RiSearch2Line className="search-icon" />
           </div>
         </div>
-        <div className="cards-box">items.map((ele)=>{<Card title=ele.title,desc=ele.desc/>})</div>
+        <div className="cards-box">items.map((ele)=>{<Card {...data} />})</div>
       </div>
     </>
   );

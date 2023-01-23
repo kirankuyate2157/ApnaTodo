@@ -64,7 +64,7 @@ const Newdata = () => {
               <span class="required">Images Url :</span>
               <input
                 name="URL"
-                // value=""
+                value={inputUrl}
                 placeholder="https://encrypted-tbn0.gstatic.com/images.png"
                 // tabindex="2"
                 // required="required"
@@ -78,6 +78,7 @@ const Newdata = () => {
               <textarea
                 id="desc"
                 name="desc"
+                value={inputDesc}
                 placeholder="Task implies work imposed by a person in authority or an employer or by circumstance charged with a variety of tasks."
                 tabindex="5"
                 required="required"
