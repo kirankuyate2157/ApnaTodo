@@ -1,43 +1,97 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Newdata = () => {
+  const [inputData, setInputData] = useState("");
+  const [items, setItems] = useState(getLocalItmes());
+  const [toggleSubmit, setToggleSubmit] = useState(true);
+
+  const getLocalItmes = () => {
+    let list = localStorage.getItem("lists");
+    console.log(list);
+
+    if (list) {
+      return JSON.parse(localStorage.getItem("lists"));
+    } else {
+      return [];
+    }
+  };
+  const addItem = () => {
+    if (!inputData) {
+      alert("plzz fill data");
+    } else if (inputData && !toggleSubmit) {
+      setItems(
+        items.map((elem) => {
+          if (elem.id === isEditItem) {
+            return { ...elem, name: inputData };
+          }
+          return elem;
+        })
+      );
+      setToggleSubmit(true);
+
+      setInputData("");
+
+      setIsEditItem(null);
+    } else {
+      const allInputData = {
+        id: new Date().getTime().toString(),
+        name: inputData,
+      };
+      setItems([...items, allInputData]);
+      setInputData("");
+    }
+  };
+
   return (
-    <div class="new-container">
-      <form action="action_page.php">
-        <label for="fname">First Name</label>
-        <input
-          type="text"
-          id="fname"
-          name="firstname"
-          placeholder="Your name.."
-        />
+    <>
+      <div id="contact-form">
+        <div class="greet">
+          <h1>ApnaTodo</h1>
+          <h4>prioritise tasks, manage tasks effectively, use time wisely </h4>
+        </div>
+        <p id="failure">Oopsie...message not sent.</p>
+        <p id="success">Your message was sent successfully. Thank you!</p>
 
-        <label for="lname">Last Name</label>
-        <input
-          type="text"
-          id="lname"
-          name="lastname"
-          placeholder="Your last name.."
-        />
+        <form method="post" action="/">
+          <div>
+            <label for="name">
+              <span class="required">Title : </span>
+              <input placeholder=" Designing.." required="required" />
+            </label>
+          </div>
+          <div>
+            <label for="email">
+              <span class="required">Images Url :</span>
+              <input
+                name="URL"
+                // value=""
+                placeholder="https://encrypted-tbn0.gstatic.com/images.png"
+                // tabindex="2"
+                // required="required"
+              />
+            </label>
+          </div>
 
-        <label for="country">Country</label>
-        <select id="country" name="country">
-          <option value="australia">Australia</option>
-          <option value="canada">Canada</option>
-          <option value="usa">USA</option>
-        </select>
-
-        <label for="subject">Subject</label>
-        <textarea
-          id="subject"
-          name="subject"
-          placeholder="Write something.."
-          style="height:200px"
-        ></textarea>
-
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
+          <div>
+            <label for="message">
+              <span class="required">Description : </span>
+              <textarea
+                id="desc"
+                name="desc"
+                placeholder="Task implies work imposed by a person in authority or an employer or by circumstance charged with a variety of tasks."
+                tabindex="5"
+                required="required"
+              ></textarea>
+            </label>
+          </div>
+          <div>
+            <button name="submit" type="submit" id="submit">
+              SEND
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 export default Newdata;

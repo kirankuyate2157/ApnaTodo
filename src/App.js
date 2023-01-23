@@ -1,12 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./Components/Navbar";
+import Home from "./Pages/Home";
 import Newdata from "./Components/Newdata";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navbar />} />
+      <Route path="/" element={<Home />} />
       <Route path="/new" element={<Newdata />} />
     </Routes>
   );
