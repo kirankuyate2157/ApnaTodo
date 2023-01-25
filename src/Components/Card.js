@@ -1,14 +1,8 @@
 import React from "react";
-import { format } from "date-fns";
+
 import { TiTick } from "react-icons/ti";
 
 const Card = (Props) => {
-  const longEnUSFormatter = new Intl.DateTimeFormat("en-IN", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   return (
     <>
       <div className="flip-card">
@@ -18,7 +12,7 @@ const Card = (Props) => {
             <div className="banner-footer">
               <div className="task-title">
                 <p className="title">{Props.title}</p>
-                <p className="date">{longEnUSFormatter.format(Props.date)}</p>
+                <p className="date">{Props.date}</p>
               </div>
               <div className="abs">
                 <div

@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import { RiSearch2Line } from "react-icons/ri";
-import Card from "../Components/Card";
-import Navbar from "../Components/Navbar";
 
-// to get the data from LS
+import Card from "../Components/Card";
+import Newdata from "../Components/Newdata";
 
 const Home = () => {
+  const [state, setState] = useState({ seen: false });
+  const [search, setSearch] = useState();
+
+  // useEffect(() => {
+  //   return () => {};
+  // }, [input]);
+
+  const togglePop = () => {
+    setState({
+      seen: !state.seen,
+    });
+  };
   const getLocalItmes = () => {
     let list = localStorage.getItem("formValues");
-    console.log(list);
+    // console.log(list);
 
     if (list) {
       return JSON.parse(localStorage.getItem("formValues"));
@@ -16,35 +27,40 @@ const Home = () => {
       return [];
     }
   };
-  console.log(getLocalItmes());
-  const tasks = [
-    {
-      title: "design",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk0FCCO8OtEVLKrZgzrzjcESqiMg0qxADnWcvJzFON&s",
-      status: false,
-      desc: "heellomve r2  4 3  34r 34 r 34r 3 r 3r 3 r3 r 3r 3  3r 3r 3 r 3r 3 r 3r 3r 3 r 3r 3 r 3r3jnfwnfjkerngknrgrrr  svnw45nfjwnfw",
-      date: new Date(),
-    },
-  ];
+  const arr = getLocalItmes() || [];
 
   return (
     <>
       <div>
-        <Navbar />
-        <div className="container">
-          <div className="search-bar">
-            <input
-              type="search"
-              placeholder="Search for Tasks..."
-              className="search"
-            />
-            <RiSearch2Line onClick={getLocalItmes} className="search-icon" />
+        <div className="container-bx">
+          <div className="main-bar">
+            <h1>do you task honestly daily...</h1>
+            <div className="search-bar">
+              <input
+                type="search"
+                placeholder="Search for Tasks..."
+                className="search"
+              />
+              <RiSearch2Line onClick={getLocalItmes} className="search-icon" />
+            </div>
           </div>
         </div>
         <div className="cards-box">
-          {tasks.map((task) => (
+          <span className="new" onClick={togglePop}>
+            Add new +
+          </span>
+          <div>{state.seen ? <Newdata toggle={togglePop} /> : null}</div>
+
+          {arr.map((task) => (
             <Card {...task} />
           ))}
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
         </div>
       </div>
     </>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const getLocalItmes = () => {
   let list = localStorage.getItem("formValues");
@@ -10,30 +11,47 @@ const getLocalItmes = () => {
     return [];
   }
 };
-const Newdata = () => {
+const longEnUSFormatter = new Intl.DateTimeFormat("en-IN", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+const Newdata = (props) => {
   const [inputData, setInputData] = useState({
     title: "",
     img: "",
     status: false,
     desc: "",
-    date: new Date(),
+    date: longEnUSFormatter.format(new Date(), "dd/mm/yyyy"),
   });
   const [formValues, setFormValues] = useState([]);
-
-  const submitForm = () => {
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/`;
+    navigate(path);
+  };
+  const submitForm = (event) => {
     setFormValues((old) => {
       return [...old, inputData];
     });
     console.log(formValues);
+    event.preventDefault();
   };
 
   useEffect(() => {
     localStorage.setItem("formValues", JSON.stringify(formValues));
   }, [formValues]);
 
+  const handleClick = () => {
+    props.toggle();
+  };
   return (
     <>
       <div id="contact-form">
+        <span className="close" onClick={handleClick}>
+          &times;
+        </span>
+        {/* <form action="/"> */}
         <div className="greet">
           <h1>ApnaTodo</h1>
           <h4>prioritise tasks, manage tasks effectively, use time wisely </h4>
@@ -41,7 +59,6 @@ const Newdata = () => {
         <p id="failure">Oopsie...data not save.</p>
         <p id="success">Your tasks added successfully. Thank you!</p>
 
-        {/* <form> */}
         <div>
           <label for="name">
             <span className="required">Title : </span>
@@ -99,6 +116,7 @@ const Newdata = () => {
           <button name="submit" onClick={submitForm} id="submit">
             Save
           </button>
+
           <ol>
             {formValues.map((ele) => {
               return <li>{ele.desc}</li>;
