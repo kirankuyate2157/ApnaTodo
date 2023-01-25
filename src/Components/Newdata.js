@@ -1,96 +1,112 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
+const getLocalItmes = () => {
+  let list = localStorage.getItem("formValues");
+  console.log(list);
+
+  if (list) {
+    return JSON.parse(localStorage.getItem("formValues"));
+  } else {
+    return [];
+  }
+};
 const Newdata = () => {
-  const [inputData, setInputData] = useState("");
-  const [items, setItems] = useState(getLocalItmes());
-  const [toggleSubmit, setToggleSubmit] = useState(true);
+  const [inputData, setInputData] = useState({
+    title: "",
+    img: "",
+    status: false,
+    desc: "",
+    date: new Date(),
+  });
+  const [formValues, setFormValues] = useState([]);
 
-  const getLocalItmes = () => {
-    let list = localStorage.getItem("lists");
-    console.log(list);
-
-    if (list) {
-      return JSON.parse(localStorage.getItem("lists"));
-    } else {
-      return [];
-    }
+  const submitForm = () => {
+    setFormValues((old) => {
+      return [...old, inputData];
+    });
+    console.log(formValues);
   };
-  const addItem = () => {
-    if (!inputData) {
-      alert("plzz fill data");
-    } else if (inputData && !toggleSubmit) {
-      setItems(
-        items.map((elem) => {
-          if (elem.id === isEditItem) {
-            return { ...elem, name: inputData };
-          }
-          return elem;
-        })
-      );
-      setToggleSubmit(true);
 
-      setInputData("");
-
-      setIsEditItem(null);
-    } else {
-      const allInputData = {
-        id: new Date().getTime().toString(),
-        name: inputData,
-      };
-      setItems([...items, allInputData]);
-      setInputData("");
-    }
-  };
+  useEffect(() => {
+    localStorage.setItem("formValues", JSON.stringify(formValues));
+  }, [formValues]);
 
   return (
     <>
       <div id="contact-form">
-        <div class="greet">
+        <div className="greet">
           <h1>ApnaTodo</h1>
           <h4>prioritise tasks, manage tasks effectively, use time wisely </h4>
         </div>
-        <p id="failure">Oopsie...message not sent.</p>
-        <p id="success">Your message was sent successfully. Thank you!</p>
+        <p id="failure">Oopsie...data not save.</p>
+        <p id="success">Your tasks added successfully. Thank you!</p>
 
-        <form method="post" action="/">
-          <div>
-            <label for="name">
-              <span class="required">Title : </span>
-              <input placeholder=" Designing.." required="required" />
-            </label>
-          </div>
-          <div>
-            <label for="email">
-              <span class="required">Images Url :</span>
-              <input
-                name="URL"
-                value={inputUrl}
-                placeholder="https://encrypted-tbn0.gstatic.com/images.png"
-                // tabindex="2"
-                // required="required"
-              />
-            </label>
-          </div>
+        {/* <form> */}
+        <div>
+          <label for="name">
+            <span className="required">Title : </span>
+            <input
+              placeholder=" Designing.."
+              value={inputData.title}
+              onChange={(e) =>
+                setInputData({
+                  ...inputData,
+                  title: e.target.value,
+                })
+              }
+              required="required"
+            />
+          </label>
+        </div>
+        <div>
+          <label for="email">
+            <span className="required">Images Url :</span>
+            <input
+              name="URL"
+              value={inputData.img}
+              onChange={(e) =>
+                setInputData({
+                  ...inputData,
+                  img: e.target.value,
+                })
+              }
+              placeholder="https://encrypted-tbn0.gstatic.com/images.png"
+              required="required"
+            />
+          </label>
+        </div>
 
-          <div>
-            <label for="message">
-              <span class="required">Description : </span>
-              <textarea
-                id="desc"
-                name="desc"
-                value={inputDesc}
-                placeholder="Task implies work imposed by a person in authority or an employer or by circumstance charged with a variety of tasks."
-                tabindex="5"
-                required="required"
-              ></textarea>
-            </label>
-          </div>
-          <div>
-            <button name="submit" type="submit" id="submit">
-              SEND
-            </button>
-          </div>
-        </form>
+        <div>
+          <label for="message">
+            <span className="required">Description : </span>
+            <textarea
+              id="desc"
+              name="desc"
+              value={inputData.desc}
+              onChange={(e) =>
+                setInputData({
+                  ...inputData,
+                  desc: e.target.value,
+                })
+              }
+              placeholder="Task implies work imposed by a person in authority or an employer or by circumstance charged with a variety of tasks."
+              tabindex="5"
+              required="required"
+            ></textarea>
+          </label>
+        </div>
+        <div>
+          <button name="submit" onClick={submitForm} id="submit">
+            Save
+          </button>
+          <ol>
+            {formValues.map((ele) => {
+              return <li>{ele.desc}</li>;
+            })}
+            <li>{inputData.desc}</li>
+          </ol>
+        </div>
+        {/* </form> */}
       </div>
     </>
   );

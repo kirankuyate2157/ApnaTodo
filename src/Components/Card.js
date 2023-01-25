@@ -1,28 +1,48 @@
 import React from "react";
+import { format } from "date-fns";
 import { TiTick } from "react-icons/ti";
 
 const Card = (Props) => {
+  const longEnUSFormatter = new Intl.DateTimeFormat("en-IN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <>
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
+      <div className="flip-card">
+        <div className="flip-card-inner">
+          <div className="flip-card-front">
             <img src={Props.img} alt="banner" className="banner" />
-            <div class="banner-footer">
-              <div class="task-title">
-                <p class="title">{Props.title}</p>
-                <p class="date">{Props.date}</p>
+            <div className="banner-footer">
+              <div className="task-title">
+                <p className="title">{Props.title}</p>
+                <p className="date">{longEnUSFormatter.format(Props.date)}</p>
               </div>
-              <div class="abs">
-                <div class="status">
-                  <TiTick class="tike" />
+              <div className="abs">
+                <div
+                  className="status"
+                  style={{
+                    background: Props.status ? "#fffff" : "#ff450f",
+                  }}
+                >
+                  <TiTick className="tike" />
                 </div>
               </div>
             </div>
           </div>
-          <div class="flip-card-back">
-            <p class="desc">{Props.desc}</p>
-            <button class="complete">completed</button>
+          <div className="flip-card-back">
+            <p className="desc">{Props.desc}</p>
+            <button
+              className="complete"
+              style={{
+                background: Props.status ? "green" : "#ff450f",
+              }}
+              onClick={Props.complete}
+            >
+              {Props.status ? "Completed.." : "Pending.."}
+            </button>
           </div>
         </div>
       </div>

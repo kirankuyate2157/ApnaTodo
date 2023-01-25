@@ -242,20 +242,23 @@
   /* padding: 10px; */
   border-radius: 15px;
   background-color: #9ed4da;
+  box-shadow: 2px 2px 25px #000000;
 }
 .tike {
   font-size: 30px;
   /* padding: 10px; */
+  color: rgb(104, 102, 102);
 }
 .desc {
   height: 80%;
   font-family: "Arial";
-  font-style: normal;
+  /* font-style: normal; */
   font-weight: 500;
   font-size: 20px;
   padding: 16px;
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
 
   color: #000000;
@@ -271,6 +274,7 @@
   padding: 10px;
   align-items: center;
   text-align: center;
+  border-radius: 8px;
 
   color: #000000;
 }
