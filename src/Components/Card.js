@@ -18,7 +18,7 @@ const Card = (Props) => {
                 <div
                   className="status"
                   style={{
-                    background: Props.status ? "#fffff" : "#ff450f",
+                    background: Props.status ? "green" : "#ff450f",
                   }}
                 >
                   <TiTick className="tike" />
